@@ -1,0 +1,73 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+  orientation: rows 
+  source_code: embed
+  theme: readable
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+library(plotly)
+library(shiny)
+library(plyr)
+library(dplyr)
+library(plotly)
+library(tm)
+```
+
+```{r}
+data = read.csv("C:/data.csv")
+```
+
+DASHBOARD CREATING {data-icon="fa-signal"}
+==========================
+
+
+Column {.sidebar}
+--------------------------
+Today : 2018-12-04 TUE    
+Learnit Job Class    
+Description :    
+
+1. 대시보드 만들기      
+2. 새로운 평가지표 만들어보기    
+3. 그래프 이쁘게 그려보기    
+4. 유지보수 잘하기 
+
+
+Row
+------------------------
+
+
+### Total Movies
+
+```{r}
+valueBox(value = nrow(data),
+         color='royalblue')
+```
+
+### Total Movies
+```{r}
+valueBox(value = nrow(data),
+         color='royalblue')
+```
+
+### Total Movies
+```{r}
+valueBox(value = nrow(data),
+         color='royalblue')
+```
+
+
+DASHBOARD2 {data-icon="fa-signal"}
+==========================
+
+### Selected Movies
+
+```{r}
+valueBox(value = nrow(data),
+         color='royalblue')
+```
