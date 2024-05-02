@@ -1,5 +1,78 @@
 
-
+# m을 rn으로 바꾸기
 def solution(rny_string):
     answer = rny_string.replace('m','rn')
+    return answer
+;
+
+# 공백 기준으로 구분하기
+def solution(my_string):
+    answer = my_string.split(" ")
+    return answer
+;
+
+# alp에 해당하는 단어를 대문자로 바꾸기
+def solution(my_string, alp):
+    answer = my_string.replace(alp, alp.upper())
+    return answer
+;
+
+# 모두 소문자로 변환하고 a > A로 바꾸기
+def solution(myString):
+    answer = myString.lower().replace("a","A")
+    return answer
+;
+
+# 홀수번째면 소문자, 짝수번째면 대문자
+def solution(strArr):
+    answer = [s.lower() if i%2 == 0 else s.upper() for i , s in enumerate(strArr)]
+    return answer
+;
+
+# 모든 문자를 소문자로 바꾸기
+def solution(myString):
+    answer = myString.lower()
+    return answer
+;
+
+# 문자가 포함되어있으면 1 아니면 0
+def solution(myString, pat):
+    answer = 1 if pat.lower() in myString.lower() else 0
+    return answer
+
+# 길이가 11 이상이면 sum, 아니면 곱하기
+from math import prod
+def solution(num_list):
+    #answer = sum(num_list) if len(num_list) >= 11 else prod(num_list)
+    return sum(num_list) if len(num_list) >= 11 else prod(num_list)
+
+# 피타고라스 정리
+a = int(input())
+c = int(input())
+
+b_square = pow(c,2)-pow(a,2)
+print(b_square)
+
+# 나이 계산 , 매개변수 받기
+
+year = int(input())
+age_type = input()
+
+if age_type == "Korea":
+    answer = 2030 - year + 1
+elif age_type == "Year":
+    answer = 2030 - year
+
+print(answer)
+
+# a=,b= 출력하기
+a, b = map(int, input().strip().split(' '))
+print(f'a = {a}\nb = {b}')
+
+# str을 n 번 반복 출력
+print(str*n)
+
+# 문자열 이어붙이기
+def solution(my_string, overwrite_string, s):
+    answer = my_string[:s] + overwrite_string + my_string[s+len(overwrite_string):]
     return answer
