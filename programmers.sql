@@ -1,4 +1,23 @@
 
+# lead
+select event_type, value-value_2 as value
+from 
+    (select event_type
+    , value
+    , lead(value)over(partition by event_type order by time desc) value_2
+    , row_number()over(partition by event_type order by time desc) num
+    from events
+    where 1=1 
+    and event_type in 
+        (SELECT event_type
+        from events
+        group by 1
+        having count(*)>=2)
+    ) a
+where 1=1
+and num=1
+order by 1
+
 # date_format
 SELECT A.TITLE
 ,A.BOARD_ID
