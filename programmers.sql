@@ -496,4 +496,23 @@ LEFT JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN E ON D.CAR_TYPE = E.CAR_TYPE
 ORDER BY 2 DESC, 1 DESC
 
 
+# ntile 활용하기 
+SELECT ID
+,CASE WHEN QUARTILE = 1 THEN 'CRITICAL'
+WHEN QUARTILE = 2 THEN 'HIGH'
+WHEN QUARTILE = 3 THEN 'MEDIUM'
+ELSE 'LOW' END AS COLONY_NAME
+FROM 
+    (SELECT ID
+    , SIZE_OF_COLONY
+    , NTILE(4)OVER(ORDER BY SIZE_OF_COLONY DESC) QUARTILE
+    FROM ECOLI_DATA) A
+ORDER BY ID
+
+# 컬럼명 문제 기술된대로 맞추기
+select a.id, count(distinct b.id) as child_count
+from ecoli_data a 
+left join ecoli_data b on a.id = b.parent_id
+group by 1
+order by 1
 
