@@ -516,3 +516,14 @@ left join ecoli_data b on a.id = b.parent_id
 group by 1
 order by 1
 
+# nvl은 ifnull로 활용, 문제 잘 읽기 10이하면 10으로 표기해라!
+select  count(distinct id) fish_count, max(length) max_length , a.fish_type
+from fish_info a
+inner join 
+    (select fish_type
+    from fish_info
+    group by 1
+    having avg(ifnull(length,10)) >= 33
+              ) b on a.fish_type = b.fish_type
+group by 3
+order by 3
