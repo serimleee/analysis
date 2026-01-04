@@ -554,3 +554,11 @@ inner join
     from ecoli_data
     group by 1) b on year(a.differentiation_date) = b.year
 order by 1,2
+
+# 소수점 첫째자리에서 반올림은 0째짜리까지 표현하라는 의미
+
+select a.dept_id, b.dept_name_en, round(avg(a.sal),0) avg_sal
+from hr_employees a 
+inner join hr_department b on a.dept_id = b.dept_id
+group by 1,2
+order by 3 desc
