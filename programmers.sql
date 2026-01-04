@@ -527,3 +527,30 @@ inner join
               ) b on a.fish_type = b.fish_type
 group by 3
 order by 3
+
+# rank와 ifnull 활용하기.
+select a.id, b.fish_name, a.length
+from 
+    (select fish_type
+    , rank()over(partition by fish_type order by ifnull(length,10) desc) number
+    , id
+    , length
+    from fish_info) a 
+inner join fish_name_info b on a.fish_type = b.fish_type
+where a.number = 1
+order by 1
+
+# concat 함수 쓰기
+select concat(max(length),'cm') max_length
+from fish_info 
+
+# YEAR 날짜반환 함수
+select year(a.differentiation_date) year
+,(b.max_size - a.size_of_colony) year_dev
+,a.id
+from ecoli_data a
+inner join 
+    (select year(differentiation_date) year, max(size_of_colony) max_size
+    from ecoli_data
+    group by 1) b on year(a.differentiation_date) = b.year
+order by 1,2
