@@ -562,3 +562,43 @@ from hr_employees a
 inner join hr_department b on a.dept_id = b.dept_id
 group by 1,2
 order by 3 desc
+
+
+# case when 문에 avg 사용하기
+select c.emp_no
+,c.emp_name
+,c.grade
+,case when c.grade = 'S' then sal*0.2
+when c.grade = 'A' then sal*0.15
+when c.grade = 'B' then sal*0.1
+else 0 end as bonus
+from 
+    (select a.emp_no
+    , b.emp_name
+    , b.sal
+    ,case when avg(a.score) >= 96 then 'S'
+    when avg(a.score) >= 90 then 'A'
+    when avg(a.score) >= 80 then 'B'
+    else 'C' end as grade
+    from hr_grade a
+    inner join hr_employees b on a.emp_no = b.emp_no
+    group by 1,2,3
+    ) c 
+order by 1
+
+# case when 문에 sum 이용하기.
+SELECT car_id
+,case when sum(case when '2022-10-16' between start_date and end_date then 1
+else 0 end) >= 1 then '대여중'
+else '대여 가능' end as availability
+from car_rental_company_rental_history
+group by 1
+order by 1 desc
+
+# having문과 having 집계 결과를 같이 조회 가능
+SELECT name, count(animal_id) count
+from animal_ins
+where name is not null
+group by 1
+having count(animal_id) >= 2
+order by 1
