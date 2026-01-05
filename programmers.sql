@@ -619,3 +619,25 @@ where start_date between '2022-08-01' and '2022-10-31' -- 해당기간 여기도
 group by 1,2
 having count(a.history_id) >0 
 order by 1,2 desc
+
+# 가능한 차량의 반대조건
+select e.car_id, e.car_type, e.fee
+from
+    (select c.*
+    ,round(daily_fee*(1-discount_rate/100)*30,0) fee 
+    from
+        (select a.*
+        from car_rental_company_car a 
+        left join
+            (select distinct car_id 
+            from car_rental_company_rental_history 
+            where start_date <= '2022-11-30' 
+            and end_date >= '2022-11-01') b on a.car_id = b.car_id
+        where a.car_type in ('세단','SUV')
+        and b.car_id is null
+        ) c
+    left join car_rental_company_discount_plan d on c.car_type = d.car_type and d.duration_type='30일 이상'
+    ) e
+where fee >= 500000
+and fee < 2000000
+order by 3 desc, 2, 1 desc
