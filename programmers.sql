@@ -602,3 +602,20 @@ where name is not null
 group by 1
 having count(animal_id) >= 2
 order by 1
+
+
+# 자기자신 조인할때 해당 기간 체크
+select month(a.start_date) month
+,a.car_id
+,count(a.history_id) records
+from car_rental_company_rental_history a
+inner join
+    (SELECT car_id
+    from car_rental_company_rental_history
+    where start_date between '2022-08-01' and '2022-10-31' -- 해당기간
+    group by 1
+    having count(history_id) >= 5) b on a.car_id = b.car_id
+where start_date between '2022-08-01' and '2022-10-31' -- 해당기간 여기도 체크 필요
+group by 1,2
+having count(a.history_id) >0 
+order by 1,2 desc
