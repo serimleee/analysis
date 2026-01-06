@@ -641,3 +641,25 @@ from
 where fee >= 500000
 and fee < 2000000
 order by 3 desc, 2, 1 desc
+
+
+# 경과기간 당일 포함 +1, 할인율은 1-할인율/100
+select d.history_id
+,round(d.rental_days*daily_fee*(1-ifnull(e.discount_rate,0)/100),0) fee
+from 
+(select c.*
+,case when rental_days >= 90 then '90일 이상'
+when rental_days >= 30 then '30일 이상'
+when rental_days >= 7 then '7일 이상'
+else '7일 미만' end as duration_type
+from 
+    (SELECT a.*
+    , datediff(end_date,start_date)+1 rental_days -- 당일포함
+    , b.car_type
+    , b.daily_fee
+    from car_rental_company_rental_history a
+    inner join car_rental_company_car b on a.car_id = b.car_id and b.car_type = '트럭'
+    ) c
+) d
+left join car_rental_company_discount_plan e on d.car_type = e.car_type and d.duration_type = e.duration_type
+order by 2 desc, 1 desc
