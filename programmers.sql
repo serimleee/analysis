@@ -663,3 +663,15 @@ from
 ) d
 left join car_rental_company_discount_plan e on d.car_type = e.car_type and d.duration_type = e.duration_type
 order by 2 desc, 1 desc
+
+# date_format 사용하기
+SELECT c.author_id
+,c.author_name
+,b.category
+,sum(a.sales * b.price) total_sales
+from book_sales a
+inner join book b on a.book_id = b.book_id
+inner join author c on b.author_id = c.author_id
+where date_format(a.sales_date,'%Y-%m') = '2022-01'
+group by 1,2,3
+order by 1, 3 desc
