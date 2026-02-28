@@ -701,3 +701,17 @@ from
     group by 1
     having avg(ifnull(length,10)) >= 33) a
 order by 3
+
+# 
+select a.id
+,b.fish_name
+,a.length
+from 
+    (select fish_type
+    ,rank()over(partition by fish_type order by coalesce(length,10) desc) num
+    ,id
+    ,length
+    from fish_info) a
+inner join fish_name_info b on a.fish_type = b.fish_type
+where num = 1
+order by 1
