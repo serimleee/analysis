@@ -51,7 +51,7 @@ INNER JOIN
 ORDER BY 1 DESC
 
 
-# lead
+# lead  LEAD(NAME, 2, '없음') OVER(PARTITION BY GROUP_ID ORDER BY ID) AS NEXT_NAME
 select event_type, value-value_2 as value
 from 
     (select event_type
