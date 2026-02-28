@@ -675,3 +675,15 @@ inner join author c on b.author_id = c.author_id
 where date_format(a.sales_date,'%Y-%m') = '2022-01'
 group by 1,2,3
 order by 1, 3 desc
+
+# rank를 변수로 못받음
+select id
+,case when num = 1 then 'CRITICAL'
+when num = 2 then 'HIGH'
+when num = 3 then 'MEDIUM'
+else 'LOW' end as colony_name
+from 
+    (select id
+    ,ntile(4)over(order by size_of_colony desc) num
+    from ecoli_data) a
+order by 1
