@@ -687,3 +687,17 @@ from
     ,ntile(4)over(order by size_of_colony desc) num
     from ecoli_data) a
 order by 1
+
+# ifnull
+select fish_count
+,max_length
+,fish_type
+from
+    (select fish_type
+    ,avg(ifnull(length,10)) avg_length
+    ,count(id) fish_count
+    ,max(ifnull(length,10)) max_length
+    from fish_info
+    group by 1
+    having avg(ifnull(length,10)) >= 33) a
+order by 3
