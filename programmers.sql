@@ -715,3 +715,40 @@ from
 inner join fish_name_info b on a.fish_type = b.fish_type
 where num = 1
 order by 1
+
+
+date_format(base_date, '%Y-%m-%d')
+datediff(max_base_date,min_base_date) 당일 포함이면 +1
+rank()over(partition by order by ) -- 파티션이 없으면 생략 가능
+row_number()over(partition by order by) -- 파티션이 없으면 생략 가능
+dense_rank()over(partition by order by)
+lead(변수)over(partition by order by) -- 정렬후 뒤에서 끌어오기
+ntile(4)over(oder by ) 4분위수 만들기
+lead(변수,2,'없음')over(partition by order by) -- 정렬후 뒤에서 2번째 끌어오기, 없으면 없음
+rlike 'A|B'  -- 문자에 따옴표 없음 or 의미
+like '%%'
+substring(A,1,3)
+concat(문자1,문자2,문자3)
+union(중복제거), union all(중복제거없음)
+group by having 절에서 연산조건 바로 넣을 수 있음
+year() month() day() hour() dayname() weekday() 0 이 월요일
+date_sub(base_date, interval weekday(base_date) DAY) 요일의 숫자만큼 일수를 빼라 (MONTH, YEAR, HOUR, MINUTE, SECOND 가능)
+ifnull(변수,'0') coalesce(변수,'0')
+
+date_sub(base_date, interval weekday(base_date) day)
+
+with recursive base as (
+select 0 as number
+union all
+select number + 1 as number
+from base
+where number < 23
+)
+
+in ( )
+not in ( )
+
+할인율 금액*(1-ifnull(fee,0)/100)
+
+
+to_date(date_trunc('month',base_date)) >>> 이게 mysql 기준으론?
