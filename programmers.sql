@@ -37,6 +37,28 @@ ELSE 'X' END AS 중성화
 FROM ANIMAL_INS
 ORDER BY ANIMAL_ID
 
+# recursive 활용
+WITH RECURSIVE date_series AS (
+    SELECT DATE('2026-01-01') AS base_date
+    UNION ALL
+    SELECT base_date + INTERVAL 1 DAY
+    FROM date_series
+    WHERE base_date < DATE('2026-01-31')
+),
+offset_series AS (
+    SELECT 1 AS offset_day
+    UNION ALL
+    SELECT offset_day + 1
+    FROM offset_series
+    WHERE offset_day < 10
+)
+SELECT 
+    base_date,
+    base_date + INTERVAL offset_day DAY AS mapped_date
+FROM date_series
+CROSS JOIN offset_series
+ORDER BY base_date, mapped_date;
+
 # 정렬 오름차순/내림차순 확인
 SELECT USER_ID
 , NICKNAME
