@@ -1,4 +1,20 @@
 
+with base_uv as (
+select distinct user_id, date_format(base_date,'%Y-%m-01') month_id
+from uv
+)
+select case when b.user_id is not null then 'remaining'
+when c.user_id is not null then 'new'
+else 'resurrected' end as user_seg
+,a.user_id
+from base_uv a
+left join base_uv b on a.user_id = b.user_id 
+		and date_sub(a.month_id, interval 1 month) = b.month_id
+left join 
+	(select user_id, min(month_id) min_month_id
+	from base_uv
+	group by 1) c on a.user_id = c.user_id and a.month_id = c.min_month_id
+
 # 반환결과 중복 체크하기, 월 추출 10월 이후인지, 10월만인지 확인
 SELECT DISTINCT A.CAR_ID
 FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY A 
