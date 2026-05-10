@@ -1,4 +1,7 @@
 
+
+
+
 avg(변수)over(order by base_date range between interval 6 day preceding and current row) -- 이전 7일 이동평균
 avg(변수)over(order by base_date range between current row and interval 6 day following) -- 이후 7일 이동평균
 
