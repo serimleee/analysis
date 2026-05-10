@@ -1,4 +1,22 @@
 
+avg(변수)over(order by base_date range between interval 6 day preceding and current row) -- 이전 7일 이동평균
+avg(변수)over(order by base_date range between current row and interval 6 day following) -- 이후 7일 이동평균
+
+avg(변수)over(order by base_date range between unbounded preceding and current row) -- 처음부터 현재까지 누적 평균
+avg(변수)over(order by base_date range between current row and unbounded following) -- 현재부터 끝까지 누적평균
+
+avg(변수)over(order by base_date rows between 6 preceding and current row) -- 현재포함 이전 7개 평균
+avg(변수)over(order by base_date rows between current row and 6 following) -- 현재포함 이후 7개 평균
+
+avg(변수)over(order by base_date rows between unbounded preceding and current row) -- 처음부터 현재까지 평균 (동점무시)
+avg(변수)over(order by base_date rows between current row and unbounded following) -- 현재부터 끝까지 평균 (동점 무시)
+
+
+필수는 preceding, following
+row between이 아닌 rows between 
+
+
+
 with base_uv as (
 select distinct user_id, date_format(base_date,'%Y-%m-01') month_id
 from uv
